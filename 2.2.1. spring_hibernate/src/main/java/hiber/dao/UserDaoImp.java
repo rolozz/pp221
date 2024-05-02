@@ -28,8 +28,8 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public List<User> getByModel(String model, int series) {
-      String HQL = "FROM User user WHERE userCar.model=:model and userCar.series=:series";
-      TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(HQL, User.class);
+      String HQL = "from User user JOIN FETCH user.userCar car where car.model = :model and car.series = :series";
+      TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(HQL);
       query.setParameter("model", model);
       query.setParameter("series", series);
       return query.getResultList();
